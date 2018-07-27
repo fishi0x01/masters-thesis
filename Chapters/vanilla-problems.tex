@@ -1,0 +1,27 @@
+\section{Problems}
+\label{sec:vanilla-problems}
+
+After discussing the advantages of \protoold~we now have a closer look at potential issues. 
+Goal of this work is to solve these problems while still maintaining the previously discussed advantages in~\xref{sec:vanilla-advantages}. 
+
+\subsection{Website Download}
+\label{sec:problem-website}
+
+In order to download a website an application first has to download an entry document (\eg index.html), which then links to other files such as Cascading Style Sheets (.css), Image files (\eg .png or .jpg) or JavaScript files (.js) that are needed to properly display the website. 
+
+In addition to this, portion of the website content might be dynamic or some static resources might differ on different sources. 
+Both of these issues are explained in more detail in~\xref{sec:dynamic-content}.
+
+Further, a raising number of providers uses the Secure Socket Layer (SSL) to secure their websites. 
+\protoold~crashes on SSL requests, thus making it very difficult to evaluate popular real-world content. 
+
+Finally, \protoold~is designed to download single files from multiple sources. 
+In order to study the performance of \mhttp~on public websites it is important for \protonew~to be able to properly download websites including all their embedded objects. 
+
+\subsection{Intelligent Chunk Scheduling}
+\label{sec:problem-static-size}
+
+\protoold~uses a static chunk size, meaning that each chunk has the same size, no matter over which path it is scheduled. 
+Obviously, a sophisticated chunk scheduler needs to be able to change chunk sizes for different paths over time in order to optimally distribute the traffic in the network. 
+
+Main contribution of \protonew~is the design and implementation of an intelligent chunk scheduler with a dynamic chunk size, \ie a scheduler that determines the best chunk size for each subsequent request (chunk) to achieve optimal throughput performance. 

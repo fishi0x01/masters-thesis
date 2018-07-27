@@ -1,0 +1,14 @@
+\section{HTTP}
+\label{sec:background-http}
+
+The Hypertext Transfer Protocol (HTTP) is a stateless transfer protocol~\cite{RFC-2616} on top of TCP. 
+After establishing a connection to a server, a client forms and sends a request and awaits the response from the server. 
+Many different meta parameters about the file and the connection itself can be specified inside a request and response header in order for client and server to properly coordinate the file transfer. 
+
+Currently, HTTP is the most used standard to deploy new services and applications~\cite{defacto-http}.
+Estimates state, that HTTP is the main protocol with more than $60$\perc of today's traffic in the internet~\cite{MAIER09-ODC}. 
+Moreover, studies have shown that large files are of major importance today, since they account for the bulk of the total volume of traffic on the internet~\cite{MAIER08-ENS}. 
+\mhttp~is designed for HTTP traffic and specifically aims to greatly decrease the download times of large files, while not harming download times of very small files.
+
+In order to request only parts of a file, \mhttp~takes advantage of HTTP's range request feature~\cite{RFC-7233}. 
+Inside the range request the exact range of wanted bytes can be specified, thus allowing the data to be chunked over different requests. 

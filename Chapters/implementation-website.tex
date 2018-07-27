@@ -1,0 +1,53 @@
+\section{Public Website Download}
+\label{sec:website-download}
+
+Accessing a web page (\ie a HTML file) typically triggers subsequent downloads
+of multiple linked web objects, \eg images (jpg, gif, png), cascading style
+sheet (css), and JavaScript (js) files. Thus, we implement a new feature in
+\mhttp~that enables the handling of multiple web objects which are subsequently
+requested after fetching an HTML page.
+
+Usually, modern GUI web browsers and download managers send HTTP-requests using multiple concurrent processes (multi-threading) in order to better deal with multiple web objects embedded in a single web page. 
+Currently, \protonew~does not support parallel file downloads. 
+Consequently, objects hosted on the same domain are requested one after another over the same socket abstraction,~\ie the basic operation of wget when \emph{--page-requisites} or \emph{-p} option is set. 
+It is important to point out that an HTML page may embed files from different domains, thus the client (wget) establishes several socket abstractions (\ie several mHTTP instances) for accessing a web page. 
+
+\subsection{Static and Dynamic Content}
+\label{sec:dynamic-content}
+
+We distinguish between 2 types of content,~\ie static and dynamic. 
+
+\strong{Static content}
+It describes files which are not rendered at request time, meaning they already exist on the server before the actual request is sent. 
+Dynamic content on the other hand is rendered at request time, meaning the server receives the request and then starts to create the resource. 
+
+Static content can be downloaded by \mhttp, since in most cases it is the same on each server. 
+Still, there exist scenarios in which resources differ on different servers. 
+For instance when changing a resource on a central server it takes some time until this change reaches every mirror server, so there always is a potential time window in which the servers serve different static content. 
+Since this scenario occurs relatively rarely, to save implementation time the new prototype at the current stage does not support this feature yet, but we propose solutions for this issue in~\xref{ch:discussion}, where we talk about content identity verification. 
+
+\strong{Dynamic content} 
+This content cannot be downloaded in a multi-request fashion, since it is highly likely that the content differs from source to source. 
+Even requests done at different times on the same server can lead to completely different results. 
+Since the majority of popular websites contains dynamic content, it is important for \mhttp~to deal with this issue. 
+We discovered that it is common for a server to reply with the \emph{Transfer-Encoding: chunked} flag when receiving a byte range request on dynamic content. 
+Range requests on static files on the other hand usually do not get a reply with that encoding type, since it does not bring any benefits in that case. 
+Chunked encoding is specifically designed for dynamic content. 
+It is used to save time by letting the server send parts of the content as soon as they are created and without prior knowledge of the total size of the generated file. 
+That way the server does not have to wait for the file to be fully generated and can start sending the already generated parts.
+Since the size of a static file is already known upon receiving a request, using cunked encoding here does not bring any benefits. 
+For that reason, when receiving such a \emph{Transfer-Encoding: chunked} flag, \mhttp~assumes dynamic content and falls back to using only the initial path and a single request to download the whole resource like normal HTTP would. 
+This approach relies on a proper server configuration (\eg not using chunked encoding on static files) and in~\xref{ch:discussion} we will discuss other approaches to identify content identity. 
+
+\subsection{Secure Socket Layer (SSL)}
+\label{sec:ssl}
+
+Nowadays privacy concerns are gaining importance. 
+This gives rise to a growing number of files delivered via HTTPS,~\ie HTTP over a Secure Socket Layer (SSL). 
+The majority of websites among the \emph{Alexa.com} top-1000, currently has at least one file that can only be accessed via HTTPS. 
+In order to conduct real-world measurements, \protonew~needs to be able to deal with HTTPS file downloads. 
+\protonew~is able to detect HTTPS requests and fall back to a single path download, similar like in~\xref{sec:dynamic-content} when dealing with dynamic content. 
+That way we are able to conduct real-world measurements, without the \mhttp~client crashing or getting stuck in the middle. 
+
+Enabling full SSL support means ensuring transparency of \mhttp~to SSL and requires a lot of engineering work. 
+This is out of scope of this work and has to be done in future work as discussed in~\xref{ch:discussion}. 

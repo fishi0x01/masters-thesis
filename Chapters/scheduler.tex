@@ -1,0 +1,13 @@
+\chapter{Smart mHTTP}
+\label{ch:scheduler}
+
+\lhead{Chapter V. \emph{Smart mHTTP}}
+
+Intelligent chunk scheduling is a key feature to maximize the overall throughput that can be achieved with \mhttp, which is why 
+one major contribution of this work is the design and implementation of such intelligent chunk scheduling algorithms. 
+In this chapter we explain in detail the problems of chunk scheduling in \mhttp~and introduce different approaches on how to solve them. 
+
+\protoold~already provides a simple scheduling algorithm with a fixed chunk size, which we call from now on the \algbase~scheduler. 
+We will use this scheduler to have a fair baseline comparison with more advanced scheduling approaches. 
+%Besides having a fixed chunk size, the \algbase~scheduler tries to determine possible bottleneck connections by comparing the measured throughputs.
+%In case a connection is determined as slow and therefore presents a possible bottleneck, the scheduler estimates how many chunks should be skipped by this connection and left for download for the faster connection in order to avoid too many out-of-order chunks in the buffer.

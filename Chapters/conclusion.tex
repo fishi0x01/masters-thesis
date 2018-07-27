@@ -1,0 +1,30 @@
+\chapter{Conclusion}
+\label{ch:conclusion}
+
+\lhead{Chapter IX. \emph{Conclusion}}
+
+%- we developed 2 dynamic chunk scheduling algorithms
+
+%- we verified that both algorithms perform similar and at least as good as the best fixed chunk size from previous studies in each download scenario
+
+%- we developed a new prototype with a more advanced threading model and memory management
+
+%- we enabled website downloads for the new prototype
+
+%- the new prototype is more robust and does not crash on every unexpected behavior (SSL bypass, dynamic content handling)
+
+%- we conducted real world experiments and could show that mHTTP gains with popular websites with large objects, while it does not do harm to websites with small objects only
+
+
+%In this work we presented the implementation, design and evaluation of \protonew, a concurrent HTTP data transfer mechanism based on various types of network diversities existing in today’s Internet. 
+In this work we presented the implementation, design and evaluation of \protonew, \ie a new prototype with dynamic chunk scheduling for \mhttp, which is a concurrent HTTP data transfer mechanism based on various types of network diversities existing in today’s Internet.
+Moreover, we proposed 2 chunk scheduling algorithms that dynamically determine the chunk size of each path during runtime. 
+We conducted measurements for single file downloads in controlled testbeds and showed that both algorithms in relatively stable environments perform similar and at least as good as the best fixed predefined chunk size from the previous \mhttp~prototype, \ie \protoold, in each download scenario. 
+Hence, both algorithms determine a very good performing chunk size for each download scenario without prior knowledge about the file size and link quality. 
+Further, we compared our most evolved scheduling algorithm, \ie \algslice, with MPTCP and observe a similar performance on large file downloads. 
+
+We introduced \protonew's advanced threading model and memory management and explained the gained robustness, which enables \protonew~to handle real-world web page downloads.
+
+Finally, we conducted real-world experiments on $24$ popular websites, which we before classified into $3$ categories based on the portion of large embedded objects. 
+We could show that \mhttp~is already decreasing download times for web pages with only a small fraction (such as 1\perc) of large objects, while it does not do any harm to web sites which only contain small objects. 
+Thus, \mhttp~does not harm the browsing of web pages with only small objects, while being beneficial for large contents such as multimedia files. 

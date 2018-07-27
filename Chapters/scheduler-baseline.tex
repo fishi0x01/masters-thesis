@@ -1,0 +1,19 @@
+\section{Baseline Scheduler}
+\label{sec:baseline-scheduler}
+
+\protoold~comes with a very basic chunk scheduler, which requests chunks of a predefined fixed size over each available path. 
+During the download this chunk size never changes. 
+%Depending on the throughput estimate, some chunks might be skipped by a slow connection in order to avoid too many chunks to arrive out-of-order at the client~\cite{KIM13-MHTTP}. 
+Besides having a fixed chunk size, the \algbase~scheduler tries to determine possible bottleneck connections by comparing the measured throughputs from each.
+In case a connection is determined as slow and therefore presents a possible bottleneck, the scheduler estimates how many chunks should be skipped by this connection and left to download by the faster connection in order to avoid too many out-of-order chunks in the buffer~\cite{KIM13-MHTTP}.
+Hence, the overall goal of this mechanism is to reduce the size of the \mhttp~client chunk buffer. 
+
+%This scheduler is reimplemented in \protonew~in order to have a baseline to compare new scheduler algorithms to. 
+
+As discussed in the previous section, \mhttp~introduces a request overhead for each chunk. 
+This can have significant impact on the performance of \mhttp, especially when the chunk sizes are small. 
+However, using fixed and large chunk sizes is not recommended as it reduces the responsiveness of \mhttp~towards changes on the network (\eg the throughput and the latency of the connections can greatly vary over time). 
+Moreover, requesting chunks of a large fixed size over all connections increases the risk that only the slow connection is active at the end, as the other connection may already have completed the download of its last chunk. 
+In the next sections, we propose algorithms that determine and change the sizes of chunks requested over different paths. 
+These schedulers measure the performance (\ie throughput and latency) of each of the connections and know the remaining file size that needs to be downloaded from the servers. 
+They use all these information to determine the size of the chunk to be downloaded next over a connection.

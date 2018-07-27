@@ -1,0 +1,47 @@
+\chapter{Introduction} % Main chapter title
+\label{ch:introduction}
+
+\lhead{Chapter I. \emph{Introduction}} % Change X to a consecutive number; this is for the header on each page - perhaps a shortened title
+
+%- multiple interfaces / sources, but HTTP does not take advantage of that
+
+%- take advantage of network diversity
+
+%- mHTTP Vanilla already implemented, but not complete for proper evaluations and traffic scheduling
+
+
+Multi-source Multipath HTTP (\mhttp)~\cite{JKIM14-TUND}\cite{KIMSIG} aims to download a single content from different sources through multiple client interfaces at the same time, intending to reduce the overall download times of web contents for end-users. 
+Two major recent developments make such an approach feasible. 
+First, the majority of mobile devices has two interfaces (\ie \wifi~and \lte) and 
+second, popular content tends to be distributed in Content Distribution Networks (CDN), thus multiple copies of the same popular content exist in several locations. 
+
+Previous studies on \mhttp~\cite{JKIM14-TUND}\cite{KIMSIG} were conducted on single file downloads in controlled testbeds. 
+Website downloads and real-world measurements pose a very interesting benchmark to verify, whether \mhttp~indeed has the potential to increase the end-user's every day browsing experience, however, these evaluations are uncharted in the previous studies~\cite{JKIM14-TUND}\cite{KIMSIG}. 
+Further, no intelligent chunk scheduling over the available paths was evident, thus different link performances were not considered to leverage the full potential of \mhttp. 
+
+Continuing the previous works~\cite{JKIM14-TUND}\cite{KIMSIG}, we propose a new \mhttp~prototype (\protonew), which is based on the original prototype (\ie \protoold). 
+\protonew~comes with the same benefits as its predecessor \protoold, \eg
+
+\begin{itemize}
+\item only client socket API modifications are necessary
+\item taking advantage of all kinds of network diversities
+\item full transparency towards the application layer, \ie applications do not need any special modifications in order to work with \mhttp.
+\end{itemize}
+
+In addition to that \protonew~provides 
+
+\begin{itemize}
+\item algorithms for intelligent chunk scheduling over the available paths. 
+\item an advanced memory management and implementation, allowing to deliver data to the application in less system calls than \protoold.
+\item the ability to download websites from servers. 
+\item an advanced threading model, enabling quick TCP buffer draining to prevent processing bottlenecks having an effect on the used bandwidth. 
+\end{itemize}
+
+In the previous studies~\cite{JKIM14-TUND}\cite{KIMSIG}, each download scenario was repeated several times for different fixed chunk sizes over the paths in order to determine the best performing chunk size. 
+Obviously, it is desirable to have an algorithm that automatically figures out the best performing chunk size during download time, without repeating the download and without any prior knowledge about the paths. 
+We show that \protonew's intelligent chunk scheduling performs in any download scenario at least as good as the best performing fixed chunk size of \protoold, thus enabling \mhttp~to automatically determine the best traffic distribution during download time without prior knowledge of the paths. 
+
+Moreover, we compare \protonew~to MPTCP and show that it performs similar, thus being a viable alternative. 
+
+Finally, we evaluate \protonew~on popular public websites and show that \mhttp~indeed has the potential of reducing download times for websites with few relatively large embedded objects, while not doing any harm to websites with very small objects only. 
+

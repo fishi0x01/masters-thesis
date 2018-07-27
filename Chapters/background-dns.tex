@@ -1,0 +1,14 @@
+\section{DNS}
+\label{sec:background-dns}
+
+In order to resolve a human-friendly URL to a set of actual server IP addresses, a Domain Name System (DNS) Server query is required. 
+In such a query the client asks its local DNS server to return known IPs for a given URL. 
+In case a list of multiple IP addresses is returned, the client usually uses only the first one and discards all other IPs. 
+Note, that different DNS servers might return different sets of IPs, \eg results from an ISP's local DNS server might differ from Google's DNS server. 
+
+According to the previous \mhttp~study~\cite{KIM13-MHTTP}, even with a single query to the local ISP's DNS Server, for the top $1000$ websites provided by \term{Alexa.com}~\cite{URL-ALEXA}, approximately $30$\perc are associated to more than one IP address. 
+Further, $10$\perc and $5$\perc belong to different network prefixes and different Autonomous Systems (ASes), respectively. 
+
+The study also shows that performing two lookups, one to the local DNS and one to Google's DNS, increases these fractions to $35$\perc (IP addresses), $17$\perc (prefixes) and $7$\perc (ASes). 
+
+Taking advantage of these results is done by \mhttp's \term{MultiDNS} module and is briefly explained in~\chref{ch:vanilla}. 

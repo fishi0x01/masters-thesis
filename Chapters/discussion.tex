@@ -1,0 +1,49 @@
+\chapter{Discussion \& Future Work}
+\label{ch:discussion}
+
+\lhead{Chapter IIX. \emph{Discussion \& Future Work}} % Change X to a consecutive number; this is for the header on each page - perhaps a shortened title
+
+%- pipelining
+
+%- E-tag
+
+%- proper SSL support -- enable SPDY
+
+In this chapter we discuss the current limitations of \protonew~and how we intent to solve them in the future. 
+
+\strong{Verification of the content identity} 
+As discussed in~\xref{sec:dynamic-content}, due to the locale or time difference it is possible that the same static content differs on different servers in a certain time window. 
+Further, relying on the \emph{Transfer-Encoding: chunked} flag to detect dynamic content can lead to failures, since it depends on a proper server configuration. 
+In such scenarios \mhttp~needs to fall back to normal HTTP in order to avoid corrupting the resource for the application. 
+We propose two solutions to identify such scenarios. 
+First, through requesting a few more bytes in the initial request, we can then compare the redundantly received extra bytes with the first few bytes of the first chunk of the second connection. 
+In case they differ, we know that the resources are not the same and fall back to normal HTTP. 
+Obviously the drawback of this method would be that the initial chunk downloads a few redundant bytes, which could be accounted as extra overhead. 
+It is object of future research how many extra bytes would be necessary to make a fair decision on resource equality and how much they harm the overall download speed. 
+Second, we could use HTTP's Entity Tag (\term{ETag}~\cite{RFC-2616}). 
+The \term{ETag} is a hash value of the resource, thus could be used to detect mismatches. 
+Of course, in order to use it, the \term{ETag} functionality needs to be enabled by the server. 
+
+\strong{More Transparency towards the application layer} 
+Currently \mhttp~only supports a minimal set of socket API functions to prove its core concept with the wget application. 
+In the future we want to expand this set of functions supported by \mhttp, to support calls from modern browsers such as FireFox or Chrome. 
+This would enable \mhttp~to be evaluated with concurrent resource requests or pipelining functionalities applied in modern browsers. 
+
+\strong{SSL support}
+As already mentioned in~\xref{sec:ssl}, a growing number of files is only accessible via HTTPS, because of growing privacy and security concerns. 
+\protonew~can detect HTTPS requests and download them through a single path, thus losing the benefit of the multi-path approach. 
+It is of utmost importance to implement a transparent channel between SSL and \mhttp, in order to enable \mhttp~to download HTTPS resources in a multi-path fashion. 
+
+\strong{Comparison with similar technologies}
+Many different multi-path technologies already exist with different traffic scheduling approaches. 
+In this work we only compare the performance of our best scheduler, \ie \algslice~with the performance of MPTCP. 
+Setting up a testbed to compare \mhttp~with other technologies such as Google's SPDY protocol~\cite{BELSHE12-SPDY} is a task for future studies. 
+
+\strong{Mobility study}
+In this work, the evaluation was done in relatively stable and static environments, \ie a non moving client with $2$ interfaces with stable internet connections. 
+We could see that in such an environment the \algalpha~and \algslice~algorithm perform similarly good. 
+Still, we expect the \algslice~algorithm to perform clearly better in more unstable, mobile environments. 
+For this purpose further studies in mobile testbeds are necessary, since \mhttp~establishes multiple connections over multiple interfaces and should be able to benefit from the path diversity to mitigate the effect of the changes that occur in the network due to the mobility of the users (\eg when a user walks away from a \wifi~access point or switches from one \wifi~network to another). 
+Furthermore, we need to closer investigate the behavior of the \algalpha~and \algslice~algorithms for different $\delta_{inc}$, $\delta_{dec}$ and $\alpha_{i,j}$ values respectively in mobile environments. 
+
+%\todo{further path manager study?}

@@ -1,0 +1,42 @@
+\chapter{Related Work}
+\label{ch:related-work}
+
+\lhead{Chapter III. \emph{Related Work}}
+
+\mhttp~is not the first approach that tries to take advantage of network diversity and deals with chunk scheduling. 
+In this chapter we discuss technologies that also try to enhance download speed by using multiple paths, focusing on their chunk scheduling approaches and how we can learn from them.
+
+\strong{Early studies}
+One of the early studies by Rodriguez and Biersack~\cite{RODRIGUEZ02-DPA} studies the concept of parallel access to replicated content. 
+In their study they use a chunk scheduler that is very similar to \protoold's \algbase~scheduler, which will be further introduced in~\xref{sec:baseline-scheduler}.
+Moreover, they mention the problem of idle connections towards the end of a download, thus inspiring us for a connection synchronization approach as introduced in~\xref{sec:synchronization-approach}.
+
+\strong{SCTP}
+The Stream Control Transmission Protocol (SCTP)~\cite{IYENGAR06-CMT} enables concurrent multipath transfer. 
+Depending on the platform, usually simple scheduler approaches such as Round-Robin or First-Come, First-Serve are used~\cite{RFC-4960}. 
+Another study discusses the importance of a pluggable scheduler for easy customizations based on the application need~\cite{YWANG11-INFO}.
+This shows that a clean and easy scheduler API can simplify the process of designing and implementing different new scheduling algorithms. 
+
+\strong{MPTCP}
+Multipath TCP (MPTCP~\cite{RFC-MPTCP,RAICIU12-HHC}) is a multipath approach between a single server and a single client, which operates on the TCP layer. 
+MPTCP Head-Of-Line Blocking, \ie a line of packets blocked by the first one, due to periodic outages on a bad path, is one major concern for optimal scheduling. 
+Further, MPTCP might suffer from receive-window limitations, \ie not enough memory to accommodate out-of-order packets~\cite{PAASCH14-MPTCP}. 
+Studies have shown, that scheduler algorithms such as Lowest-RTT-First, which take the link quality in terms of round-trip-latency into account, tend to perform better in MPTCP than simple algorithms like Round-Robin~\cite{PAASCH14-MPTCP}.
+We discuss important link quality metrics for \mhttp~and how we intent to measure them in~\xref{sec:metrics}. 
+
+\strong{Video streaming}
+Studies in video streaming for different providers (\eg Youtube) were performed, in which chunk scheduling algorithms were proposed. 
+Evensen~\etal evaluate fixed chunk and dynamic chunk scheduling~\cite{EVENSEN11-ITP}. 
+Their video streaming client benefits from dynamic chunk scheduling, because less traffic is distributed on the slow path. 
+Chen~\etal propose a dynamic chunk scheduler that doubles or halves the chunk size, based on the evolution of the link quality, \ie the bandwidth~\cite{CHEN14-MMA}. 
+Inspired by this, we propose a similar approach that also takes the round-trip-latency and bandwidth into account in~\xref{sec:alpha-approach}. 
+
+%\strong{Download boosters}
+%\todo{torrent, JDownloader, samsung galaxy booster}
+%\todo{scheduler unknown, but likely simple and very greedy - dishonors the fairness aspect of TCP}
+
+\strong{Socket Intents}
+Socket Intents uses pre-configurable policies to decide which interface to use for which kind of traffic~\cite{SCHMIDT13-SIL}. 
+It distinguishes between different types of traffic, \eg bulk transfers (big data) and query transfers (small data). 
+Depending on the traffic type a primary interface is selected, \eg query transfers preferably over low latency interfaces and bulk transfers preferably over high throughput interfaces. 
+In order to accomplish this, the application layer needs to provide additional information about the traffic. 

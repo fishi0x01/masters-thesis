@@ -1,0 +1,53 @@
+\contentsline {chapter}{Declaration of Authorship}{i}{dummy.1}
+\vspace {1em}
+\contentsline {chapter}{Abstract}{ii}{dummy.2}
+\vspace {1em}
+\contentsline {chapter}{German Abstract}{iii}{dummy.3}
+\vspace {1em}
+\contentsline {chapter}{Acknowledgements}{iv}{dummy.4}
+\vspace {1em}
+\contentsline {chapter}{Contents}{v}{dummy.5}
+\contentsline {chapter}{List of Figures}{vii}{dummy.7}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.9}
+\contentsline {chapter}{\numberline {2}Background}{3}{chapter.10}
+\contentsline {section}{\numberline {2.1}HTTP}{3}{section.11}
+\contentsline {section}{\numberline {2.2}DNS}{3}{section.12}
+\contentsline {section}{\numberline {2.3}CDN}{4}{section.13}
+\contentsline {section}{\numberline {2.4}TCP}{4}{section.14}
+\contentsline {chapter}{\numberline {3}Related Work}{6}{chapter.15}
+\contentsline {chapter}{\numberline {4}mHTTP Vanilla}{8}{chapter.16}
+\contentsline {section}{\numberline {4.1}Components}{8}{section.17}
+\contentsline {section}{\numberline {4.2}Advantages}{8}{section.21}
+\contentsline {section}{\numberline {4.3}Problems}{9}{section.22}
+\contentsline {subsection}{\numberline {4.3.1}Website Download}{9}{subsection.23}
+\contentsline {subsection}{\numberline {4.3.2}Intelligent Chunk Scheduling}{10}{subsection.24}
+\contentsline {chapter}{\numberline {5}Smart mHTTP}{11}{chapter.25}
+\contentsline {section}{\numberline {5.1}Core Problem}{11}{section.26}
+\contentsline {section}{\numberline {5.2}Baseline Scheduler}{13}{section.30}
+\contentsline {section}{\numberline {5.3}Smart $\alpha $ Scheduler}{13}{section.31}
+\contentsline {section}{\numberline {5.4}Smart Time Slice Scheduler}{15}{section.54}
+\contentsline {section}{\numberline {5.5}Metrics Estimation}{18}{section.81}
+\contentsline {section}{\numberline {5.6}Path Management}{20}{section.83}
+\contentsline {section}{\numberline {5.7}Performance Assurance Mechanism}{20}{section.84}
+\contentsline {chapter}{\numberline {6}Implementation}{22}{chapter.85}
+\contentsline {section}{\numberline {6.1}General Enhancements}{22}{section.86}
+\contentsline {subsection}{\numberline {6.1.1}New Threading Model}{23}{subsection.88}
+\contentsline {subsection}{\numberline {6.1.2}Reducing System Calls}{23}{subsection.89}
+\contentsline {subsection}{\numberline {6.1.3}Memory Management}{24}{subsection.93}
+\contentsline {section}{\numberline {6.2}Public Website Download}{25}{section.95}
+\contentsline {subsection}{\numberline {6.2.1}Static and Dynamic Content}{26}{subsection.96}
+\contentsline {subsection}{\numberline {6.2.2}Secure Socket Layer (SSL)}{26}{subsection.97}
+\contentsline {chapter}{\numberline {7}Performance Evaluation}{28}{chapter.98}
+\contentsline {section}{\numberline {7.1}Testbed}{28}{section.99}
+\contentsline {section}{\numberline {7.2}Initial Chunk Size}{30}{section.104}
+\contentsline {section}{\numberline {7.3}Single File Download Times}{32}{section.107}
+\contentsline {subsection}{\numberline {7.3.1}Baseline Scheduler}{32}{subsection.109}
+\contentsline {subsection}{\numberline {7.3.2}Implication of $\alpha $ values}{34}{subsection.111}
+\contentsline {subsection}{\numberline {7.3.3}Comparison of different Schedulers}{36}{subsection.114}
+\contentsline {subsection}{\numberline {7.3.4}mHTTP vs. MPTCP}{38}{subsection.117}
+\contentsline {section}{\numberline {7.4}Website Downloads}{40}{section.120}
+\contentsline {chapter}{\numberline {8}Discussion \& Future Work}{43}{chapter.124}
+\contentsline {chapter}{\numberline {9}Conclusion}{45}{chapter.125}
+\vspace {2em}
+\vspace {2em}
+\contentsline {chapter}{Bibliography}{46}{dummy.126}

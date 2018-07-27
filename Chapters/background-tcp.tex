@@ -1,0 +1,22 @@
+\section{TCP}
+\label{sec:background-tcp}
+
+TCP applies algorithms, that react to link quality changes and sender/receiver constraints in order to avoid link congestion collapse by limiting the number of sent packets. 
+In general, this is called congestion control~\cite{RFC-5681}.
+
+Different algorithms to avoid congestion collapse exist, but all of them have the general idea in common, \ie a congestion window is used to limit the maximum allowed number of unacknowledged packets in end-to-end transit. 
+Depending on the link quality, the size of the congestion window changes. 
+
+TCP starts in a slow start phase, \ie the congestion window is very small. 
+If no timeout events which signal packet loss occur, TCP rapidly increases the congestion window, assuming the quality of the link is good enough to send more packets. 
+After a certain congestion window size threshold is reached, TCP goes into congestion avoidance state, meaning the window from now on increases slower on successful transmissions. 
+On loss events the congestion window is decreased, since packet losses are a typical symptom of link overuse. 
+Depending on which algorithm is used, the increase and decrease rates of the congestion window differ, but common mechanisms are Linear-Increase/Multiplicative-Decrease or Multiplicative-Increase/Multiplicative-Decrease. 
+The first one is usually used during congestion avoidance in order to slowly increase the congestion window.
+
+Besides using congestion control, TCP also limits the sending rate with a flow control algorithm~\cite{RFC-793}. 
+A sliding window is applied to determine the maximum possible sender rate at which the receiver's buffer will not be overwhelmed. 
+Sender and receiver notify each other about how much data they can buffer, so the opposite end can adjust its sliding window accordingly.
+TCP chooses the smaller window from both (congestion and flow control) to limit its sending rate.
+
+Understanding these mechanisms is important in order to develop efficient scheduling algorithms for~\mhttp.

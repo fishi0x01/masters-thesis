@@ -1,0 +1,10 @@
+\section{Performance Assurance Mechanism}
+\label{sec:performance-assurance}
+
+Each scheduling decision is based on an estimated throughput and round-trip-latency value for each active connection. 
+It is an issue that these values might change shortly after a scheduling decision was made, since especially in wireless environments link quality changes do frequently occur. 
+Taking this into consideration we decide to enhance the \algalpha~and \algslice~algorithm with a lower bound performance assurance mechanism on top, which ensures that the best active path is never idle while a worse performing path is still receiving data. 
+This mechanism is only active for the last chunk, since on all previous chunks we can be sure that there is still enough traffic left to distribute among the paths. 
+During the download of the last chunk, on each socket read operation the connection compares its estimated download time left with the times other currently open idle paths might need to download the same remaining chunk. 
+In case another path might be faster than the current connection plus a certain re-request penalty, we pause the current connection and re-request the missing bytes over the likely faster path.
+Since this leads to the case that the slow connection is idle instead, this approach does not directly help us with bundling the throughput of each open path, but it does ensure to at least perform as good as the best established path, thus acting like a lower bound assurance mechanism. 
